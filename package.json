@@ -1,0 +1,25 @@
+{
+  "name": "always-listening",
+  "version": "0.1.0",
+  "description": "An Electron app that constantly listens, transcribes via Deepgram, and distills the transcript into memories — with pluggable Markdown and InsForge sinks.",
+  "main": "src/main/main.js",
+  "scripts": {
+    "build:renderer": "esbuild src/renderer/renderer.js --bundle --outfile=src/renderer/bundle.js --format=iife --platform=browser --loader:.js=jsx --sourcemap",
+    "watch:renderer": "npm run build:renderer -- --watch",
+    "start": "npm run build:renderer && electron .",
+    "dev": "npm run build:renderer && electron ."
+  },
+  "author": "",
+  "license": "MIT",
+  "dependencies": {
+    "@deepgram/sdk": "^3.9.0",
+    "@insforge/sdk": "latest",
+    "dotenv": "^16.4.5",
+    "electron-store": "^8.2.0",
+    "openai": "^4.77.0"
+  },
+  "devDependencies": {
+    "electron": "^33.2.1",
+    "esbuild": "^0.24.2"
+  }
+}

@@ -1,0 +1,92 @@
+<!doctype html>
+<html lang="en">
+  <head>
+    <meta charset="utf-8" />
+    <meta http-equiv="Content-Security-Policy"
+      content="default-src 'self'; connect-src 'self' https://api.deepgram.com wss://api.deepgram.com; style-src 'self' 'unsafe-inline'; script-src 'self';" />
+    <title>Always Listening</title>
+    <link rel="stylesheet" href="styles.css" />
+  </head>
+  <body>
+    <div id="errorBar" class="error-bar"></div>
+
+    <header class="topbar">
+      <div class="brand">
+        <span class="logo">●</span>
+        <span>Always Listening</span>
+      </div>
+      <div class="status">
+        <span id="statusDot" class="dot"></span>
+        <span id="statusText">Idle</span>
+      </div>
+      <div class="topbar-actions">
+        <button id="startBtn" class="btn primary">Start listening</button>
+        <button id="stopBtn" class="btn" disabled>Stop</button>
+        <button id="settingsBtn" class="btn ghost">Settings</button>
+      </div>
+    </header>
+
+    <main class="layout">
+      <section class="panel transcript-panel">
+        <div class="panel-head">
+          <h2>Transcript</h2>
+          <span id="insforgeState" class="chip">InsForge: …</span>
+        </div>
+        <div id="transcript" class="transcript"></div>
+        <div id="interim" class="interim"></div>
+      </section>
+
+      <aside class="panel memory-panel">
+        <div class="panel-head">
+          <h2>Memories</h2>
+          <span id="understandState" class="chip">Understanding: idle</span>
+        </div>
+        <div id="memories" class="memories"></div>
+        <button id="openDirBtn" class="btn ghost wide">Open Markdown folder</button>
+      </aside>
+    </main>
+
+    <div id="settingsPanel" class="settings">
+      <div class="settings-card">
+        <h2>Settings</h2>
+
+        <label>Deepgram API key</label>
+        <input id="dgKey" type="password" placeholder="dg_..." autocomplete="off" />
+
+        <div class="row">
+          <div>
+            <label>Deepgram model</label>
+            <input id="dgModel" type="text" placeholder="nova-2" />
+          </div>
+          <div>
+            <label>Language</label>
+            <input id="language" type="text" placeholder="en-US" />
+          </div>
+        </div>
+
+        <label>Markdown output folder</label>
+        <input id="outputDir" type="text" />
+
+        <fieldset>
+          <legend>Output sinks</legend>
+          <label class="check"><input id="sinkMarkdown" type="checkbox" /> Markdown files</label>
+          <label class="check"><input id="sinkInsforge" type="checkbox" /> InsForge database</label>
+        </fieldset>
+
+        <fieldset>
+          <legend>Understanding (LLM distillation)</legend>
+          <label class="check"><input id="understandEnabled" type="checkbox" /> Extract memories from transcript</label>
+          <label>Model (OpenRouter via InsForge)</label>
+          <input id="understandModel" type="text" placeholder="anthropic/claude-sonnet-4.5" />
+        </fieldset>
+
+        <div class="settings-actions">
+          <button id="closeSettings" class="btn ghost">Cancel</button>
+          <button id="saveSettings" class="btn primary">Save</button>
+        </div>
+      </div>
+    </div>
+
+    <script src="bundle.js"></script>
+  </body>
+</html>
