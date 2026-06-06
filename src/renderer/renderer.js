@@ -105,15 +105,22 @@ function resolveCommandCard(r) {
   const conf = r.confidence != null ? `${Math.round(r.confidence * 100)}%` : '';
   card.querySelector('.agent-badge').textContent = `detected · ${conf}`;
   card.querySelector('.agent-name').textContent = r.name || '';
-  card.querySelector('.agent-msg').textContent = r.message;
+  // Swap the placeholder for an editable instruction so the user can tweak
+  // what the agent is asked to build before confirming.
+  const editor = document.createElement('textarea');
+  editor.className = 'agent-msg agent-msg-edit';
+  editor.value = r.message;
+  editor.rows = 3;
+  card.querySelector('.agent-msg').replaceWith(editor);
   const actions = card.querySelector('.agent-actions');
   actions.style.display = '';
-  const cmd = { id: r.id, name: r.name, message: r.message, codingAgent: r.codingAgent };
   card.querySelector('.dismiss').onclick = () => card.remove();
   card.querySelector('.confirm').onclick = async () => {
+    const message = editor.value.trim() || r.message;
+    editor.readOnly = true;
     setCardStatus(card, 'Creating workspace…');
     actions.style.display = 'none';
-    await window.app.spinUpReplica(cmd);
+    await window.app.spinUpReplica({ id: r.id, name: r.name, message, codingAgent: r.codingAgent });
   };
 }
 
@@ -144,6 +151,9 @@ function handleReplicaUpdate(u) {
   if (!card) return;
   const actions = card.querySelector('.agent-actions');
   if (actions) actions.style.display = 'none';
+  // Once the replica is being created the instruction is locked in.
+  const editor = card.querySelector('.agent-msg-edit');
+  if (editor) editor.readOnly = true;
   if (u.status === 'error') {
     card.classList.add('err');
     setCardStatus(card, `Error: ${u.error || 'failed'}`);
@@ -296,7 +306,7 @@ async function loadSettingsIntoForm() {
   els.understandModel.value = s.understanding?.model || 'openrouter/free';
   els.replicasEnabled.checked = !!s.replicas?.enabled;
   els.replicasAutoConfirm.checked = !!s.replicas?.autoConfirm;
-  els.replicasAgent.value = s.replicas?.codingAgent || 'codex';
+  els.replicasAgent.value = s.replicas?.codingAgent || 'claude';
   els.replicasEnv.value = s.replicas?.environmentId || '';
 }
 
@@ -324,11 +334,12 @@ async function saveSettings() {
     replicas: {
       enabled: els.replicasEnabled.checked,
       autoConfirm: els.replicasAutoConfirm.checked,
-      codingAgent: els.replicasAgent.value.trim() || 'codex',
+      codingAgent: els.replicasAgent.value.trim() || 'claude',
       environmentId: els.replicasEnv.value.trim(),
-      model: '',
-      detectModel: 'openrouter/free',
-      minConfidence: 0.6
+      // Preserve fields not exposed in the form — don't clobber on save.
+      model: state.settings?.replicas?.model ?? '',
+      detectModel: state.settings?.replicas?.detectModel || 'anthropic/claude-haiku-4.5',
+      minConfidence: state.settings?.replicas?.minConfidence ?? 0.6
     }
   };
   state.settings = await window.app.setSettings(partial);

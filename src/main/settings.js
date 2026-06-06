@@ -31,11 +31,11 @@ const defaults = {
   replicas: {
     enabled: true,
     environmentId: '', // falls back to REPLICAS_ENVIRONMENT_ID
-    codingAgent: 'codex',
-    model: '',
+    codingAgent: 'claude',
+    model: 'haiku',
     // Detection model for parsing the spoken command. A fast model keeps the
     // card latency low; the trigger phrase is simple to parse.
-    detectModel: 'openrouter/free',
+    detectModel: 'anthropic/claude-haiku-4.5',
     // Require a click to confirm before actually spinning up (safer for ambient
     // speech). Set true to auto-spin on high confidence.
     autoConfirm: false,

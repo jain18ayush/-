@@ -94,6 +94,13 @@ body {
 .agent-badge { font-size: 10px; text-transform: uppercase; letter-spacing: .5px; color: #ffb454; }
 .agent-name { font-size: 12px; color: var(--text); font-weight: 600; }
 .agent-msg { font-size: 13px; line-height: 1.45; color: var(--text); }
+textarea.agent-msg-edit {
+  width: 100%; box-sizing: border-box; resize: vertical; font: inherit;
+  background: var(--bg); border: 1px solid var(--border); border-radius: 6px;
+  padding: 7px 9px; outline: none;
+}
+textarea.agent-msg-edit:focus { border-color: var(--accent); }
+textarea.agent-msg-edit:read-only { background: transparent; border-color: transparent; resize: none; padding-left: 0; }
 .agent-actions { display: flex; gap: 8px; justify-content: flex-end; margin-top: 10px; }
 .agent-actions .btn { padding: 6px 12px; font-size: 12px; }
 .agent-status { font-size: 12px; color: var(--muted); margin-top: 8px; }
