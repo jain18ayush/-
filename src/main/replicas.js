@@ -65,9 +65,14 @@ async function listEnvironments() {
  * @param {string} opts.message   What to build (the prompt for the agent)
  * @param {string} [opts.name]    Human-readable name (whitespace stripped)
  * @param {string} [opts.environmentId]
- * @param {string} [opts.codingAgent] 'codex' (default) | 'claude'
+ * @param {string} [opts.codingAgent] 'claude' (default) | 'codex'
  * @param {string} [opts.model]
  */
+// Appended to every build instruction so the agent's work lands in the repo
+// (otherwise it tends to write files to its workspace and never commit).
+const COMMIT_INSTRUCTION =
+  'Work inside the mounted GitHub repository. When done, commit your changes on a feature branch, push it, and open a pull request.';
+
 async function createReplica(opts) {
   const message = (opts.message || '').trim();
   if (!message) throw new Error('A build instruction (message) is required');
@@ -79,9 +84,9 @@ async function createReplica(opts) {
 
   const body = {
     name: slugifyName(opts.name || message),
-    message,
+    message: `${message}\n\n${COMMIT_INSTRUCTION}`,
     environment_id,
-    coding_agent: opts.codingAgent || 'codex',
+    coding_agent: opts.codingAgent || 'claude',
     lifecycle_policy: 'default'
   };
   if (opts.model) body.model = opts.model;
