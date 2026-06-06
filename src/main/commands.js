@@ -37,8 +37,8 @@ Return STRICT JSON:
 - isCommand: true only if there is a clear directive to spin up / start / launch an agent to build/do something.
 - message: a clear, self-contained build instruction for the coding agent, written as an imperative (e.g. "Build a Tetris game in React with keyboard controls and a score counter."). Infer reasonable scope from context; do NOT include filler or meta-talk about agents.
 - name: a short descriptive label, max 4 words (e.g. "tetris game").
-- codingAgent: "codex" unless the speaker explicitly asks for claude.
-If it is not a real command, return {"isCommand": false, "confidence": <low>, "name": "", "message": "", "codingAgent": "codex"}.`;
+- codingAgent: "claude" unless the speaker explicitly asks for codex.
+If it is not a real command, return {"isCommand": false, "confidence": <low>, "name": "", "message": "", "codingAgent": "claude"}.`;
 
 async function detectCommand(windowText, model) {
   const ai = getOpenAI();
@@ -69,7 +69,7 @@ async function detectCommand(windowText, model) {
       confidence: typeof parsed.confidence === 'number' ? parsed.confidence : 0.6,
       name: (parsed.name || '').trim(),
       message: String(parsed.message).trim(),
-      codingAgent: parsed.codingAgent === 'claude' ? 'claude' : 'codex'
+      codingAgent: parsed.codingAgent === 'codex' ? 'codex' : 'claude'
     };
   } catch (err) {
     console.error('[commands] detection failed:', err.message || err);
