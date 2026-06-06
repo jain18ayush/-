@@ -1,5 +1,8 @@
 # AGENTS.md
 
+> **Note:** Edit the code under `voice-app/insforge-hackathon/` (this project's
+> `src/`), **not** the main Computah `src/` at the repository root.
+
 <!-- INSFORGE:START -->
 ## InsForge backend
 

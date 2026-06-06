@@ -1,5 +1,9 @@
 # Always Listening
 
+> **Note:** This app lives under `voice-app/insforge-hackathon/` — make all code
+> changes here (its own `src/`), **not** in the main Computah `src/` at the
+> repository root.
+
 An Electron desktop app that **constantly listens**, transcribes your voice in
 real time with **Deepgram**, and distills the running transcript into durable
 **memories** with an LLM. Output is **pluggable**: it writes Markdown files by
