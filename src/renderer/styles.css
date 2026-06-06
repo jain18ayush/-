@@ -82,6 +82,25 @@ body {
 .memory-tags { display: flex; gap: 6px; flex-wrap: wrap; }
 .tag { font-size: 10px; color: var(--accent); }
 
+.agents { display: flex; flex-direction: column; gap: 10px; max-height: 42%; overflow-y: auto; }
+.hint { color: var(--muted); font-size: 12px; line-height: 1.5; border: 1px dashed var(--border); border-radius: 8px; padding: 10px; }
+.agent-card { background: var(--panel-2); border: 1px solid var(--border); border-left: 3px solid #ffb454; border-radius: 8px; padding: 11px 12px; }
+.agent-card.ok { border-left-color: var(--green); }
+.agent-card.err { border-left-color: var(--red); }
+.agent-card.pending { border-left-color: var(--accent); animation: pulse 1.4s infinite; }
+.agent-card.pending .agent-msg { color: var(--muted); font-style: italic; }
+.dots { animation: pulse 1s infinite; }
+.agent-head { display: flex; align-items: center; gap: 8px; margin-bottom: 6px; }
+.agent-badge { font-size: 10px; text-transform: uppercase; letter-spacing: .5px; color: #ffb454; }
+.agent-name { font-size: 12px; color: var(--text); font-weight: 600; }
+.agent-msg { font-size: 13px; line-height: 1.45; color: var(--text); }
+.agent-actions { display: flex; gap: 8px; justify-content: flex-end; margin-top: 10px; }
+.agent-actions .btn { padding: 6px 12px; font-size: 12px; }
+.agent-status { font-size: 12px; color: var(--muted); margin-top: 8px; }
+.agent-link { color: var(--accent); text-decoration: none; }
+.agent-link-url { display: block; margin-top: 4px; font-family: ui-monospace, SFMono-Regular, Menlo, monospace; font-size: 11px; color: var(--muted); word-break: break-all; cursor: pointer; user-select: all; }
+.agent-link-url:hover { color: var(--accent); }
+
 .settings {
   position: fixed; inset: 0; background: rgba(0,0,0,.55);
   display: none; align-items: center; justify-content: center; z-index: 20;

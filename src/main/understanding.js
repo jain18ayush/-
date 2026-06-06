@@ -42,7 +42,7 @@ async function extractMemories(transcriptText, model) {
 
   try {
     const resp = await ai.chat.completions.create({
-      model: model || 'anthropic/claude-sonnet-4.5',
+      model: model || 'openrouter/free',
       temperature: 0.2,
       max_tokens: 800,
       response_format: { type: 'json_object' },

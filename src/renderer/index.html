@@ -38,6 +38,14 @@
 
       <aside class="panel memory-panel">
         <div class="panel-head">
+          <h2>Agents</h2>
+          <span id="replicasState" class="chip">Replicas: …</span>
+        </div>
+        <div id="agents" class="agents">
+          <div class="hint">Say e.g. "spin up a replicas agent to build a Tetris game" — a confirmation card will appear here.</div>
+        </div>
+
+        <div class="panel-head" style="margin-top:18px;">
           <h2>Memories</h2>
           <span id="understandState" class="chip">Understanding: idle</span>
         </div>
@@ -77,7 +85,17 @@
           <legend>Understanding (LLM distillation)</legend>
           <label class="check"><input id="understandEnabled" type="checkbox" /> Extract memories from transcript</label>
           <label>Model (OpenRouter via InsForge)</label>
-          <input id="understandModel" type="text" placeholder="anthropic/claude-sonnet-4.5" />
+          <input id="understandModel" type="text" placeholder="openrouter/free" />
+        </fieldset>
+
+        <fieldset>
+          <legend>Replicas agents (voice-triggered)</legend>
+          <label class="check"><input id="replicasEnabled" type="checkbox" /> Detect "spin up an agent" commands</label>
+          <label class="check"><input id="replicasAutoConfirm" type="checkbox" /> Auto-spin without confirmation (risky)</label>
+          <label>Coding agent</label>
+          <input id="replicasAgent" type="text" placeholder="codex" />
+          <label>Environment ID (blank = Global / repo-less)</label>
+          <input id="replicasEnv" type="text" placeholder="defaults to REPLICAS_ENVIRONMENT_ID" />
         </fieldset>
 
         <div class="settings-actions">

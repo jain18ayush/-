@@ -23,7 +23,23 @@ const defaults = {
     // or after this many seconds since the last run (whichever comes first).
     everyWords: 120,
     everySeconds: 45,
-    model: 'anthropic/claude-sonnet-4.5'
+    model: 'openrouter/free'
+  },
+  // Voice-triggered Replicas coding agents. When the user says something like
+  // "spin up a replicas agent to build X", detect it and (after confirmation)
+  // create a replica. The API key + default environment come from .env.local.
+  replicas: {
+    enabled: true,
+    environmentId: '', // falls back to REPLICAS_ENVIRONMENT_ID
+    codingAgent: 'codex',
+    model: '',
+    // Detection model for parsing the spoken command. A fast model keeps the
+    // card latency low; the trigger phrase is simple to parse.
+    detectModel: 'openrouter/free',
+    // Require a click to confirm before actually spinning up (safer for ambient
+    // speech). Set true to auto-spin on high confidence.
+    autoConfirm: false,
+    minConfidence: 0.6
   }
 };
 
